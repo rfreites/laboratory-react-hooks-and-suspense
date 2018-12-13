@@ -1,23 +1,32 @@
-import React, { useState, useEffect } from "react";
+/* @flow */
+import React, { useState, useEffect } from 'react'
 
-function useCounter({ initialState, step }) {
-  const initialCount = () => Number(window.localStorage.getItem("count") || 0);
-  const [count, setCount] = useState(initialCount);
-  const increment = () => setCount(count + step);
+type CounterProps = {
+  initial?: number,
+  step?: number
+}
+
+function Counter({
+  initial,
+  step,
+}: CounterProps) {
+  const [count, setCount] = useState(initial || 0)
+  const incrementNumber = () => count + (step || 0)
+  const increment = () => setCount(incrementNumber)
+
   useEffect(
     () => {
-      window.localStorage.setItem("count", count);
-      console.log("execution reader..");
+      window.localStorage.setItem('count', count)
     },
-    [count]
-  );
-  return {
-    count,
-    increment
-  };
+    [count],
+  )
+
+  return <button type="button" onClick={increment}>{count}</button>
 }
 
-export default function Counter() {
-  const { count, increment } = useCounter({ initialState: 1, step: 2 });
-  return <button onClick={increment}>{count}</button>;
+Counter.defaultProps = {
+  initial: 0,
+  step: 1,
 }
+
+export default Counter

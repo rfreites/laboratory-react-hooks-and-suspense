@@ -1,0 +1,6 @@
+flow-typed
+node_modules
+packages/**/dist
+apps/**/build
+utils/expo-yarn-workspaces
+scripts/**/templates
